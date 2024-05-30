@@ -5,8 +5,9 @@
 // 
 //
 
-class Test5 {
+public class Test5 {
     public static void main(String[] args) {
-        // 코드를 완성하시오!
+        System.out.println(args[0] + " 님 반갑습니다.");
+
     }
 }
