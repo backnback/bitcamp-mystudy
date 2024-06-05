@@ -1,6 +1,6 @@
 package com.eomcs.lang.ex04;
 
-//# 배열 - 배열 레퍼런스와 배열 인스턴스 II
+// # 배열 - 배열 레퍼런스와 배열 인스턴스 II
 //
 public class Exam0540 {
   public static void main(String[] args) {
@@ -10,10 +10,10 @@ public class Exam0540 {
 
     // 주의!
     // - 아직 레퍼런스는 배열의 메모리를 알지 못하기 때문에 사용할 수 없다.
-    //    arr1[0] = 100; // 컴파일 오류!
+    // arr1[0] = 100; // 컴파일 오류!
 
     // 레퍼런스에 그 레퍼런스 타입의 배열 주소를 넘겨야 한다.
-    //    arr1 = new float[5]; // 컴파일 오류!
+    // arr1 = new float[5]; // 컴파일 오류!
 
     // 배열 인스턴스를 생성하고 그 주소를 레퍼런스에 저장한다.
     arr1 = new int[5];
@@ -24,5 +24,16 @@ public class Exam0540 {
 
     // 배열 인스턴스에 저장된 값을 출력해보자!
     System.out.println(arr1[0]);
+
+
+    int[] arr2;
+    arr2 = new int[3];
+    arr2[1] = 100;
+    arr2[2] = 1;
+    arr2[0] = 0;
+    System.out.println(arr2[0] + "," + arr2[1] + "," + arr2[2]);
+
+
+
   }
 }
