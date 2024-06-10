@@ -4,6 +4,7 @@
 package bitcamp.myapp;
 
 
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 
@@ -19,7 +20,14 @@ public class App {
         String appTitle = "[팀 프로젝트 관리 시스템]";
         String line = "--------------------------------------------";
 
-        String[] menus = {"회원", "팀", "프로젝트", "게시판", "도움말", "종료"};  // 배열 선언 및 초기화
+        String[] menus = {
+                "회원",
+                "팀",
+                "프로젝트",
+                "게시판",
+                "도움말",
+                "종료"
+                };  // 배열 선언 및 초기화
 
 
         System.out.println(boldAnsi + line + resetAnsi);
@@ -40,28 +48,29 @@ public class App {
         // do ~ while 을 썼을 때 배열을 범위를 넘어서 오류가 발생함
         // while (true) + break 구문으로 전환
         int menuNo;
-        while (true) {
+        do {
             System.out.print("> ");  // 줄 안 바꾸고 입력 받아야 하니까
             menuNo = sc.nextInt();
 
-            // 메뉴 번호가 유효한지 판단
-            if (menuNo >= 1 && menuNo <= menus.length) {
-                // 메뉴가 종료일 때 반복 종료
-                if (menus[menuNo - 1] == "종료") {
-                    break;
+            if (menuNo >= 1 && menuNo <= menus.length) {   // 정상적인 번호로 판단
+                if (menus[menuNo - 1] != "종료") {   // 메뉴가 종료가 아닐 때만 출력하기
+                    System.out.println(menus[menuNo - 1]);  // 인덱스는 0부터 시작
                 }
-                System.out.println(menus[menuNo - 1]);  // 정상적인 메뉴고 종료가 아닐 때 메뉴 이름 출력
 
             } else {
                 System.out.println("메뉴 번호가 옳지 않습니다.");
             }
 
 
-        }
+        } while (menus[menuNo - 1] != "종료");   // 메뉴 제목이 종료가 아닐 때만 반복하겠다.
 
         System.out.println("종료합니다.");  // 어차피 종료되면 반복문을 나가므로 여기에 넣음
 
 
+        // 사용을 완료한 자원은 반환해야 다른 프로세스(프로그램)이 사용할 수 있다.
+        // 단, JVM을 종료하면 JVM이 사용한 모든 자원은 강제 회수된다.
+        // OS가 강제 회수한다.
+        sc.close();
 
     }
 }
