@@ -18,55 +18,48 @@ public class App {
 
         String appTitle = "[팀 프로젝트 관리 시스템]";
         String line = "--------------------------------------------";
-        String[] menu = {"회원", "팀", "프로젝트", "게시판", "도움말", "종료"};
+
+        String[] menus = {"회원", "팀", "프로젝트", "게시판", "도움말", "종료"};  // 배열 선언 및 초기화
 
 
         System.out.println(boldAnsi + line + resetAnsi);
         System.out.println(boldAnsi + appTitle + resetAnsi);
         System.out.println();
-        for (int i = 0; i < menu.length; i++) {
-            if (i == 5) {
-                System.out.println(redAnsi + boldAnsi + (i + 1) + ". " + menu[i] + resetAnsi);
+        for (int i = 0; i < menus.length; i++) {
+            if (menus[i] == "종료") {
+                System.out.printf("%s%d. %s%s\n", (redAnsi + boldAnsi), (i + 1), menus[i], resetAnsi);
             } else {
-                System.out.println((i + 1) + ". " + menu[i]);
+                System.out.printf("%d. %s\n", (i + 1), menus[i]);
             }
 
         }
         System.out.println(boldAnsi + line + resetAnsi);
 
 
+        // swtich ~ case문의 긴 코드를 if ~ else를 사용하여 간략하게 줄였다.
+        // do ~ while 을 썼을 때 배열을 범위를 넘어서 오류가 발생함
+        // while (true) + break 구문으로 전환
         int menuNo;
-        do {
+        while (true) {
             System.out.print("> ");  // 줄 안 바꾸고 입력 받아야 하니까
             menuNo = sc.nextInt();
 
-            switch (menuNo) {
-                case 1:
-                    System.out.println(menu[0]);
+            // 메뉴 번호가 유효한지 판단
+            if (menuNo >= 1 && menuNo <= menus.length) {
+                // 메뉴가 종료일 때 반복 종료
+                if (menus[menuNo - 1] == "종료") {
                     break;
-                case 2:
-                    System.out.println(menu[1]);
-                    break;
-                case 3:
-                    System.out.println(menu[2]);
-                    break;
-                case 4:
-                    System.out.println(menu[3]);
-                    break;
-                case 5:
-                    System.out.println(menu[4]);
-                    break;
-                case 6:
-                    System.out.println(menu[5]);
-                    break;
-                default:
-                    System.out.println("메뉴 번호가 옳지 않습니다.");
-                    break;
+                }
+                System.out.println(menus[menuNo - 1]);  // 정상적인 메뉴고 종료가 아닐 때 메뉴 이름 출력
+
+            } else {
+                System.out.println("메뉴 번호가 옳지 않습니다.");
             }
 
-        } while (menuNo != 6);   // 종료 메뉴를 선택 시 반복 종료
 
+        }
 
+        System.out.println("종료합니다.");  // 어차피 종료되면 반복문을 나가므로 여기에 넣음
 
 
 
