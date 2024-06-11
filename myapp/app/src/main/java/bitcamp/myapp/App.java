@@ -7,70 +7,90 @@ package bitcamp.myapp;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
-
 public class App {
+
+    static Scanner keyboardScanner = new Scanner(System.in);
+
+    static String[] menus = new String[] {
+            "회원",
+            "팀",
+            "프로젝트",
+            "게시판",
+            "도움말",
+            "종료"
+    };
+
     public static void main(String[] args) {
-        Scanner sc = new java.util.Scanner(System.in);
 
-        String boldAnsi = "\u001B[1m";
-        String redAnsi = "\u001B[31m";
-        String resetAnsi = "\u001B[0m";
+        printMenu(); // 메서드에 묶인 코드를 실행하는 것을 "메서드를 호출(call)한다"라고 부른다.
 
+        String command;
+        while (true) {
+            try {
+                command = prompt();
+
+                if (command.equals("menu")) {
+                    printMenu();
+
+                } else {
+                    int menuNo = Integer.parseInt(command);
+                    String menuTitle = getMenuTitle(menuNo); // 설명하는 변수
+                    if (menuTitle == null) {
+                        System.out.println("유효한 메뉴 번호가 아닙니다.");
+                    } else if (menuTitle.equals("종료")) {
+                        break;
+                    } else {
+                        System.out.println(menuTitle);
+                    }
+                }
+            } catch (NumberFormatException ex) {
+                System.out.println("숫자로 메뉴 번호를 입력하세요.");
+            }
+        }
+
+        System.out.println("종료합니다.");
+
+        keyboardScanner.close();
+    }
+
+    static void printMenu() {
+        String boldAnsi = "\033[1m";
+        String redAnsi = "\033[31m";
+        String resetAnsi = "\033[0m";
 
         String appTitle = "[팀 프로젝트 관리 시스템]";
-        String line = "--------------------------------------------";
-
-        String[] menus = {
-                "회원",
-                "팀",
-                "프로젝트",
-                "게시판",
-                "도움말",
-                "종료"
-                };  // 배열 선언 및 초기화
-
+        String line = "----------------------------------";
 
         System.out.println(boldAnsi + line + resetAnsi);
         System.out.println(boldAnsi + appTitle + resetAnsi);
-        System.out.println();
+
         for (int i = 0; i < menus.length; i++) {
-            if (menus[i] == "종료") {
-                System.out.printf("%s%d. %s%s\n", (redAnsi + boldAnsi), (i + 1), menus[i], resetAnsi);
+            if (menus[i].equals("종료")) {
+                System.out.printf("%s%d. %s%s\n", (boldAnsi + redAnsi), (i + 1), menus[i], resetAnsi);
             } else {
                 System.out.printf("%d. %s\n", (i + 1), menus[i]);
             }
-
         }
+
         System.out.println(boldAnsi + line + resetAnsi);
-
-
-        // swtich ~ case문의 긴 코드를 if ~ else를 사용하여 간략하게 줄였다.
-        // do ~ while 을 썼을 때 배열을 범위를 넘어서 오류가 발생함
-        // while (true) + break 구문으로 전환
-        int menuNo;
-        do {
-            System.out.print("> ");  // 줄 안 바꾸고 입력 받아야 하니까
-            menuNo = sc.nextInt();
-
-            if (menuNo >= 1 && menuNo <= menus.length) {   // 정상적인 번호로 판단
-                if (menus[menuNo - 1] != "종료") {   // 메뉴가 종료가 아닐 때만 출력하기
-                    System.out.println(menus[menuNo - 1]);  // 인덱스는 0부터 시작
-                }
-
-            } else {
-                System.out.println("메뉴 번호가 옳지 않습니다.");
-            }
-
-
-        } while (menus[menuNo - 1] != "종료");   // 메뉴 제목이 종료가 아닐 때만 반복하겠다.
-
-        System.out.println("종료합니다.");  // 어차피 종료되면 반복문을 나가므로 여기에 넣음
-
-
-        // 사용을 완료한 자원은 반환해야 다른 프로세스(프로그램)이 사용할 수 있다.
-        // 단, JVM을 종료하면 JVM이 사용한 모든 자원은 강제 회수된다.
-        // OS가 강제 회수한다.
-        sc.close();
-
     }
+
+    static String prompt() {
+        System.out.print("> ");
+        return keyboardScanner.nextLine();
+    }
+
+    static boolean isValidateMenu(int menuNo) {
+        return menuNo >= 1 && menuNo <= menus.length;
+    }
+
+    static String getMenuTitle(int menuNo) {
+//        if (isValidateMenu(menuNo)) {
+//            return menus[menuNo - 1];
+//        }
+//        return null;
+
+        return isValidateMenu(menuNo) ? menus[menuNo - 1] : null;
+    }
+
 }
