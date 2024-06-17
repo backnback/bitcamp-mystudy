@@ -4,7 +4,7 @@ import study.oop.clazz.vo.Score;
 
 // 연습: 클래스 문법을 데이터 타입을 정의하는 용도로 사용
 // 1) 클래스 사용전:
-// 2) 데이터 타입 정의: 성적 데이터를 저장할 메모리를 새로 정의 - Score 클래스
+// 2) 데이터 타입 정의:
 // 3) 리팩토링: printScore() 메서드
 // 4) 리팩토링: compute() 메서드
 // 5) GRASP(General Responsibility Assignment Software Patterns) 패턴: compute() 멧서드 이동
