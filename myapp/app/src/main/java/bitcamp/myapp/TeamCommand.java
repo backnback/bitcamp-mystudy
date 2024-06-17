@@ -6,6 +6,7 @@ public class TeamCommand {
   static User[][] team = new User[MAX_SIZE][MAX_SIZE];
   static String[] teamName = new String[MAX_SIZE];
   static int teamLength = 0;
+  static int[] teamMemberLength = new int[MAX_SIZE];
 
   static void executeTeamCommand(String command) {
     System.out.printf("[%s]\n", command);
@@ -33,7 +34,7 @@ public class TeamCommand {
     teamName[teamLength] = Prompt.input("팀명?");
     int userLength = UserCommand.userLength;
     User[] users = UserCommand.users;
-    int teamMemberLength = 0;
+    int MemberLength = 0;
 
     while (true) {
       int userNo = Integer.parseInt(Prompt.input("추가할 팀원 번호?(종료: 0)"));
@@ -43,11 +44,12 @@ public class TeamCommand {
       } else if (userNo < 1 || userNo > userLength) {
         System.out.println("없는 회원입니다.");
       } else {
-        team[teamLength][teamMemberLength] = users[userNo - 1];
-        teamMemberLength++;
+        team[teamLength][MemberLength] = users[userNo - 1];
+        MemberLength++;
         System.out.printf("'%s'을 추가했습니다.\n", users[userNo - 1].name);
       }
     }
+    teamMemberLength[teamLength] = MemberLength;
     teamLength++;
   }
 
@@ -59,10 +61,8 @@ public class TeamCommand {
     }
     System.out.printf("팀명: %s\n", teamName[teamNo - 1]);
     System.out.println("팀원");
-    for (int i = 0; i < team[teamNo - 1].length; i++) {
-      if (team[teamNo - 1][i] != null) {
-        System.out.printf("- %s\n", team[teamNo - 1][i].name);
-      }
+    for (int i = 0; i < teamMemberLength[teamNo - 1]; i++) {
+      System.out.printf("- %s\n", team[teamNo - 1][i].name);
     }
   }
 
@@ -74,11 +74,42 @@ public class TeamCommand {
   }
 
   static void updateTeam() {
-    System.out.println("update");
+    int teamNo = Integer.parseInt(Prompt.input("팀 번호?"));
+    if (teamNo < 1 || teamNo > teamLength) {
+      System.out.println("없는 팀입니다.");
+      return;
+    }
+    teamName[teamNo - 1] = Prompt.input(String.format("이름(%s)?", teamName[teamNo - 1]));
+    for (int i = 0; i < teamMemberLength[teamNo - 1]; i++) {
+      String answer = Prompt.input(String.format("팀원(%s) 삭제?", team[teamNo - 1][i].name));
+      if (answer.equals("y") || answer.equals("Y")) {
+        for (int j = i; j < teamMemberLength[teamNo - 1]; j++) {
+          team[teamNo - 1][j] = team[teamNo - 1][j + 1];
+        }
+        teamMemberLength[teamNo - 1]--;
+        team[teamNo - 1][teamMemberLength[teamNo - 1]] = null;
+        System.out.printf("'%s' 팀원을 삭제합니다.\n", team[teamNo - 1][i].name);
+      } else {
+        System.out.printf("'%s' 팀원을 유지합니다.\n", team[teamNo - 1][i].name);
+      }
+    }
+    System.out.println("변경했습니다.");
   }
 
   static void deleteTeam() {
-    System.out.println("delete");
+    int teamNo = Integer.parseInt(Prompt.input("팀 번호?"));
+    if (teamNo < 1 || teamNo > teamLength) {
+      System.out.println("없는 팀입니다.");
+      return;
+    }
+    for (int i = teamNo; i < teamLength; i++) {
+      team[i - 1] = team[i];
+      teamName[i - 1] = teamName[i];
+    }
+    teamLength--;
+    team[teamLength] = null;   // 가비지 처리
+    teamName[teamLength] = null;
+    System.out.println("삭제 했습니다.");
   }
 
 }
