@@ -1,8 +1,13 @@
 package bitcamp.myapp;
 
+import bitcamp.myapp.command.BoardCommand;
+import bitcamp.myapp.command.ProjectCommand;
+import bitcamp.myapp.command.UserCommand;
+import bitcamp.myapp.util.Prompt;
+
 public class App {
 
-  static String[] mainMenus = new String[] {"회원", "팀", "프로젝트", "게시판", "도움말", "종료"};
+  static String[] mainMenus = new String[] {"회원", "프로젝트", "게시판", "도움말", "종료"};
   static String[][] subMenus = {{"등록", "목록", "조회", "변경", "삭제"}, {"등록", "목록", "조회", "변경", "삭제"},
       {"등록", "목록", "조회", "변경", "삭제"}, {"등록", "목록", "조회", "변경", "삭제"}};
 
@@ -10,7 +15,7 @@ public class App {
   public static void main(String[] args) {
 
     printMenu(); // 메서드에 묶인 코드를 실행하는 것을 "메서드를 호출(call)한다"라고 부른다.
-    
+
     String command;
     while (true) {
       try {
@@ -27,7 +32,7 @@ public class App {
           } else if (menuTitle.equals("종료")) {
             break;
           } else {
-            if (menuNo >= 1 && menuNo <= 4) {
+            if (menuNo >= 1 && menuNo <= 3) {
               processMenu(menuTitle, subMenus[menuNo - 1]);
             } else {
               System.out.println(menuTitle);
@@ -48,7 +53,7 @@ public class App {
     String redAnsi = "\033[31m";
     String resetAnsi = "\033[0m";
 
-    String appTitle = "[팀 프로젝트 관리 시스템]";
+    String appTitle = "[프로젝트 관리 시스템]";
     String line = "----------------------------------";
 
     System.out.println(boldAnsi + line + resetAnsi);
@@ -103,16 +108,12 @@ public class App {
               UserCommand.executeUserCommand(subMenuTitle);
               break;
 
-            case "팀":
-              TeamCommand.executeTeamCommand(subMenuTitle);
-              break;
-
             case "프로젝트":
-              executeProjectCommand(subMenuTitle);
+              ProjectCommand.executeProjectCommand(subMenuTitle);
               break;
 
             case "게시판":
-              executeBoardCommand(subMenuTitle);
+              BoardCommand.executeBoardCommand(subMenuTitle);
               break;
 
             default:
@@ -125,14 +126,5 @@ public class App {
       }
     }
   }
-
-  static void executeProjectCommand(String command) {
-    System.out.printf("[%s]\n", command);
-  }
-
-  static void executeBoardCommand(String command) {
-    System.out.printf("[%s]\n", command);
-  }
-
 
 }
