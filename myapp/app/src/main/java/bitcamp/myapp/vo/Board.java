@@ -1,37 +1,14 @@
 package bitcamp.myapp.vo;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
+import java.util.Date;
 
 public class Board {
 
   private String title;
   private String content;
-  private String writeDate;
-  private String viewNo;
+  private Date createdDate;
+  private int viewCount;
 
-
-
-  public String getViewNo() {
-    return viewNo;
-  }
-
-  public void setViewNo(String viewNo) {
-    this.viewNo = viewNo;
-  }
-
-  public String getWriteDate() {
-    return writeDate;
-  }
-
-
-  public String getContent() {
-    return content;
-  }
-
-  public void setContent(String content) {
-    this.content = content;
-  }
 
   public String getTitle() {
     return title;
@@ -41,10 +18,27 @@ public class Board {
     this.title = title;
   }
 
-  public void calculateNow() {
-    LocalDateTime now = LocalDateTime.now();
-    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-    this.writeDate = now.format(formatter);
+  public String getContent() {
+    return content;
   }
 
+  public void setContent(String content) {
+    this.content = content;
+  }
+
+  public Date getCreatedDate() {
+    return createdDate;
+  }
+
+  public void setCreatedDate(Date createdDate) {
+    this.createdDate = createdDate;
+  }
+
+  public int getViewCount() {
+    return viewCount;
+  }
+
+  public void setViewCount(int viewCount) {
+    this.viewCount = viewCount;
+  }
 }
