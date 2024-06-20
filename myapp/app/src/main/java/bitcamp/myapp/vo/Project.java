@@ -2,6 +2,9 @@ package bitcamp.myapp.vo;
 
 public class Project {
 
+  private static int seqNo;
+
+  private int no;
   private String title;
   private String description;
   private String startDate;
@@ -9,6 +12,17 @@ public class Project {
   private User[] members = new User[10];
   private int memberSize;
 
+  public static int getNextSeqNo() {
+    return ++seqNo;
+  }
+
+  public int getNo() {
+    return no;
+  }
+
+  public void setNo(int no) {
+    this.no = no;
+  }
 
   public String getTitle() {
     return title;
@@ -44,8 +58,7 @@ public class Project {
 
   public boolean containsMember(User user) {
     for (int i = 0; i < this.memberSize; i++) {
-      User member = members[i];
-      if (member.getName().equals(user.getName())) {
+      if (this.members[i] == user) {
         return true;
       }
     }
@@ -53,7 +66,7 @@ public class Project {
   }
 
   public void addMember(User user) {
-    members[memberSize++] = user;
+    this.members[this.memberSize++] = user;
   }
 
   public int countMembers() {
@@ -61,13 +74,13 @@ public class Project {
   }
 
   public User getMember(int index) {
-    return members[index];
+    return this.members[index];
   }
 
-  public void deleteMemeber(int index) {
-    for (int i = index + 1; i < memberSize; i++) {
-      members[i - 1] = members[i];
+  public void deleteMember(int index) {
+    for (int i = index + 1; i < this.memberSize; i++) {
+      this.members[i - 1] = this.members[i];
     }
-    members[--memberSize] = null;
+    this.members[--this.memberSize] = null;
   }
 }
