@@ -7,9 +7,7 @@ import java.util.Date;
 
 public class BoardCommand {
 
-  BoardList boardList = new BoardList();
-
-  public void executeBoardCommand(String command) {
+  public static void executeBoardCommand(String command) {
     System.out.printf("[%s]\n", command);
     switch (command) {
       case "등록":
@@ -30,33 +28,30 @@ public class BoardCommand {
     }
   }
 
-  private void addBoard() {
+  private static void addBoard() {
     Board board = new Board();
     board.setTitle(Prompt.input("제목?"));
     board.setContent(Prompt.input("내용?"));
     board.setCreatedDate(new Date());
     board.setNo(Board.getNextSeqNo());
-    boardList.add(board);
+    BoardList.add(board);
   }
 
-  private void listBoard() {
+  private static void listBoard() {
     System.out.println("번호 제목 작성일 조회수");
-    for (Object obj : boardList.toArray()) {
-      Board board = (Board) obj;
+    for (Board board : BoardList.toArray()) {
       System.out.printf("%d %s %tY-%3$tm-%3$td %d\n", board.getNo(), board.getTitle(),
           board.getCreatedDate(), board.getViewCount());
     }
   }
 
-
-  private void viewBoard() {
+  private static void viewBoard() {
     int boardNo = Prompt.inputInt("게시글 번호?");
-    Board board = boardList.findByNo(boardNo);
+    Board board = BoardList.findByNo(boardNo);
     if (board == null) {
       System.out.println("없는 게시글입니다.");
       return;
     }
-
     board.setViewCount(board.getViewCount() + 1);
     System.out.printf("제목: %s\n", board.getTitle());
     System.out.printf("내용: %s\n", board.getContent());
@@ -64,28 +59,26 @@ public class BoardCommand {
     System.out.printf("조회수: %d\n", board.getViewCount());
   }
 
-  private void updateBoard() {
+  private static void updateBoard() {
     int boardNo = Prompt.inputInt("게시글 번호?");
-    Board board = boardList.findByNo(boardNo);
+    Board board = BoardList.findByNo(boardNo);
     if (board == null) {
       System.out.println("없는 게시글입니다.");
       return;
     }
-
     board.setViewCount(board.getViewCount() + 1);
     board.setTitle(Prompt.input("제목(%s)?", board.getTitle()));
     board.setContent(Prompt.input("내용(%s)?", board.getContent()));
     System.out.println("변경 했습니다.");
   }
 
-  private void deleteBoard() {
+  private static void deleteBoard() {
     int boardNo = Prompt.inputInt("게시글 번호?");
-    Board deletedBoard = boardList.findByNo(boardNo);
+    Board deletedBoard = BoardList.delete(boardNo);
     if (deletedBoard != null) {
-      boardList.remove(boardList.indexOf(deletedBoard));
-      System.out.printf("%d번 게시글을 삭제 했습니다.\n", deletedBoard.getNo());
+      System.out.println("삭제 했습니다.");
     } else {
-      System.out.println("없는 게시글입니다.");
+
     }
   }
 

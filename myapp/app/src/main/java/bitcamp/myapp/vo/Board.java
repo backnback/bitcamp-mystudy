@@ -12,6 +12,7 @@ public class Board {
   private Date createdDate;
   private int viewCount;
 
+
   public static int getNextSeqNo() {
     return ++seqNo;
   }
