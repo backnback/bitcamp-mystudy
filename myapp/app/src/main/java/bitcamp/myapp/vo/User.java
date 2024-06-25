@@ -11,7 +11,6 @@ public class User {
   private String password;
   private String tel;
 
-
   public static int getNextSeqNo() {
     return ++seqNo;
   }
