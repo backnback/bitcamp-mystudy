@@ -2,14 +2,14 @@ package bitcamp.myapp.util;
 
 import java.util.Arrays;
 
-public class ArrayList extends AbstractList {
+public class ArrayList implements List {
 
   private static final int MAX_SIZE = 3;
 
   private Object[] list = new Object[MAX_SIZE];
   private int size = 0;
 
-  @Override // 재정의 또는 추상메서드 구현을 의미
+  @Override
   public void add(Object obj) {
     if (size == list.length) {
       // 1) 우리가 만든 메서드를 사용하여 배열 크기 증가
@@ -66,6 +66,11 @@ public class ArrayList extends AbstractList {
       }
     }
     return -1;
+  }
+
+  @Override
+  public int size() {
+    return size;
   }
 
   @Override
