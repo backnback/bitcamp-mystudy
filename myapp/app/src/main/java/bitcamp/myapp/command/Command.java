@@ -1,7 +1,8 @@
 package bitcamp.myapp.command;
 
+import bitcamp.myapp.util.Stack;
+
 public interface Command {
 
-  void execute(String name);
-
+  void execute(Stack menuPath);
 }
