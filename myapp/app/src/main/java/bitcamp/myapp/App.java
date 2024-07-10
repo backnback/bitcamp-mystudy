@@ -1,12 +1,21 @@
 package bitcamp.myapp;
 
-import bitcamp.myapp.command.*;
-import bitcamp.myapp.util.*;
-
+import bitcamp.myapp.command.BoardCommand;
+import bitcamp.myapp.command.Command;
+import bitcamp.myapp.command.HelpCommand;
+import bitcamp.myapp.command.HistoryCommand;
+import bitcamp.myapp.command.ProjectCommand;
+import bitcamp.myapp.command.UserCommand;
+import bitcamp.myapp.util.Prompt;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
+import java.util.Stack;
 
 public class App {
+
 
   String[] menus = {"회원", "프로젝트", "게시판", "도움말", "명령내역", "종료"};
   Stack menuPath = new Stack();
@@ -23,7 +32,6 @@ public class App {
     commandMap.put("프로젝트", new ProjectCommand("프로젝트", projectList, userList));
     commandMap.put("도움말", new HelpCommand());
     commandMap.put("명령내역", new HistoryCommand());
-
   }
 
 
@@ -31,9 +39,9 @@ public class App {
     new App().execute();
   }
 
-
   void execute() {
     menuPath.push("메인");
+
     printMenu();
 
     String command;
@@ -65,7 +73,6 @@ public class App {
     Prompt.close();
   }
 
-
   void printMenu() {
     String boldAnsi = "\033[1m";
     String redAnsi = "\033[31m";
@@ -88,16 +95,13 @@ public class App {
     System.out.println(boldAnsi + line + resetAnsi);
   }
 
-
   private boolean isValidateMenu(int menuNo) {
     return menuNo >= 1 && menuNo <= menus.length;
   }
 
-
   private String getMenuTitle(int menuNo) {
     return isValidateMenu(menuNo) ? menus[menuNo - 1] : null;
   }
-
 
   void processMenu(String menuTitle) {
     Command command = commandMap.get(menuTitle);
@@ -118,5 +122,4 @@ public class App {
     }
     return strBuilder.toString();
   }
-
 }
