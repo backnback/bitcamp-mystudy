@@ -14,26 +14,12 @@
 
 
 ```mermaid
-classDiagram
-    class Animal {
-        <<abstract>>
-        + String name
-        + void makeSound()
-    }
-    class Dog {
-        + void makeSound()
-    }
-    class Cat {
-        + void makeSound()
-    }
-    class Bird {
-        + void makeSound()
-    }
-
-    Animal <|-- Dog
-    Animal <|-- Cat
-    Animal <|-- Bird
-
+  graph TD;
+      A-->B;
+      A-->C;
+      B-->D;
+      C-->D;
+```
 
 ## 작업
 
