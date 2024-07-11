@@ -12,6 +12,29 @@
 
 - 이전과 같다.
 
+
+```mermaid
+classDiagram
+    class Animal {
+        <<abstract>>
+        + String name
+        + void makeSound()
+    }
+    class Dog {
+        + void makeSound()
+    }
+    class Cat {
+        + void makeSound()
+    }
+    class Bird {
+        + void makeSound()
+    }
+
+    Animal <|-- Dog
+    Animal <|-- Cat
+    Animal <|-- Bird
+
+
 ## 작업
 
 - 목록 관련 클래스 삭제
