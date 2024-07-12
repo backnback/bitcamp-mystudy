@@ -1,6 +1,7 @@
 package bitcamp.myapp.command;
 
 import bitcamp.myapp.util.Prompt;
+import java.util.Stack;
 
 public abstract class AbstractCommand implements Command {
 
@@ -10,26 +11,19 @@ public abstract class AbstractCommand implements Command {
     this.menuTitle = menuTitle;
   }
 
-
-  private void printMenus() {
-    String[] menus = getMenus();
-    System.out.printf("[%s]\n", menuTitle);
-    for (int i = 0; i < menus.length; i++) {
-      System.out.printf("%d. %s\n", (i + 1), menus[i]);
-    }
-    System.out.println("9. 이전");
-  }
-
   @Override
-  public void execute() {
+  public void execute(Stack<String> menuPath) {
+    menuPath.push(menuTitle);
+
     printMenus();
 
     while (true) {
-      String command = Prompt.input(String.format("메인/%s>", menuTitle));
+      String command = Prompt.input("%s>", getMenuPathTitle(menuPath));
       if (command.equals("menu")) {
         printMenus();
         continue;
       } else if (command.equals("9")) { // 이전 메뉴 선택
+        menuPath.pop();
         return;
       }
 
@@ -49,6 +43,15 @@ public abstract class AbstractCommand implements Command {
     }
   }
 
+  private void printMenus() {
+    String[] menus = getMenus();
+    System.out.printf("[%s]\n", menuTitle);
+    for (int i = 0; i < menus.length; i++) {
+      System.out.printf("%d. %s\n", (i + 1), menus[i]);
+    }
+    System.out.println("9. 이전");
+  }
+
   private String getMenuTitle(int menuNo) {
     String[] menus = getMenus();
     return isValidateMenu(menuNo) ? menus[menuNo - 1] : null;
@@ -59,11 +62,19 @@ public abstract class AbstractCommand implements Command {
     return menuNo >= 1 && menuNo <= menus.length;
   }
 
+  private String getMenuPathTitle(Stack menuPath) {
+    StringBuilder strBuilder = new StringBuilder();
+    for (int i = 0; i < menuPath.size(); i++) {
+      if (strBuilder.length() > 0) {
+        strBuilder.append("/");
+      }
+      strBuilder.append(menuPath.get(i));
+    }
+    return strBuilder.toString();
+  }
 
-
+  // 구체적인 동작은 서브 클래스에서 정의한다.
   protected abstract String[] getMenus();
 
   protected abstract void processMenu(String menuName);
-
-
 }

@@ -1,12 +1,12 @@
-# 18. 리팩토링: GRASP의 High Cohesion 적용
+# 25. 자바 Collection API 사용하기
 
 ## 학습목표
 
-- GRASP 객체 지향 설계 지침 중에서 High Cohesion을 적용할 수 있다.
+- 자바에서 제공하는 컬렉션 API를 사용할 수 있다.
 
 ## 요구사항
 
-- 서브 메뉴 처리를 각 Command 구현체에 이전하기
+- 기존에 작성한 컬렉션 클래스 대신 자바에서 제공하는 클래스로 교체하기
 
 ## 실행 결과
 
@@ -14,21 +14,15 @@
 
 ## 작업
 
-- Command 인터페이스 변경
-  - execute() 메서드 변경
-- 회원 서브 메뉴 관련 코드 이전
-  - UserCommand 클래스 변경
-- 프로젝트 서브 메뉴 관련 코드 이전
-  - ProjectCommand 클래스 변경
-- 게시판 서브 메뉴 관련 코드 이전
-  - BoardCommand 클래스 변경
-- App 클래스 변경 
-
+- 목록 관련 클래스 삭제
 
 ## 소스 파일
 
-- Command.java
-- UserCommand.java
-- ProjectCommand.java
-- BoardCommand.java
-- App.java
+- List.java (삭제)
+- Iterator.java (삭제)
+- AbstractList.java (삭제)
+- ArrayList.java (삭제)
+- LinkedList.java (삭제)
+- Stack.java (삭제)
+- Queue.java (삭제)
+- Board.java, User.java 빼고 모두 변경
