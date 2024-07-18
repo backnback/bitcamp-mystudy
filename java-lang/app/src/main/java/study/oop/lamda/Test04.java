@@ -27,45 +27,70 @@ public class Test04 {
   }
 
 
+
   // 2) 일반 클래스 + 로컬 클래스의 특징 이용
   static InterestCalculator create2(double rate) {
-    return null;
+    class My implements InterestCalculator {
+      @Override
+      public double compute(int money) {
+        return money + (money * rate);
+      }
+    }
+    return new My();
   }
+
+  // 위의 파라미터가 아니라, 실제 생성자에 값을 넣어주는 코드로 바뀐다.???
+
 
 
   // 3) 익명 클래스
   static InterestCalculator create3(double rate) {
-    return null;
+    InterestCalculator c = new InterestCalculator() {
+      @Override
+      public double compute(int money) {
+        return money + (money * rate);
+      }
+    };
+    return c;
   }
+
 
 
   // 4) 익명 클래스 직접 대입
   static InterestCalculator create4(double rate) {
-    return null;
+    return new InterestCalculator() {
+      @Override
+      public double compute(int money) {
+        return money + (money * rate);
+      }
+    };
   }
+
 
 
   // 5) 람다
   static InterestCalculator create5(double rate) {
-    return null;
+    InterestCalculator c = money -> money + (money * rate);
+    return c;
   }
+
 
 
   // 6) 람다 직접 대입
   static InterestCalculator create6(double rate) {
-    return null;
+    return money -> money + (money * rate);
   }
 
 
   public static void main(String[] args) {
-    InterestCalculator c1 = create1(3.5);
+    InterestCalculator c1 = create1(0.035);
     System.out.println(c1.compute(1000_0000));
 
-    System.out.println(create2(3.5).compute(1000_0000));
-    System.out.println(create3(3.5).compute(1000_0000));
-    System.out.println(create4(3.5).compute(1000_0000));
-    System.out.println(create5(3.5).compute(1000_0000));
-    System.out.println(create6(3.5).compute(1000_0000));
+    System.out.println(create2(0.035).compute(1000_0000));
+    System.out.println(create3(0.035).compute(1000_0000));
+    System.out.println(create4(0.035).compute(1000_0000));
+    System.out.println(create5(0.035).compute(1000_0000));
+    System.out.println(create6(0.035).compute(1000_0000));
   }
 
 }
