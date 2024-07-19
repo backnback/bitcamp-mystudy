@@ -5,5 +5,4 @@ public interface Menu {
   String getTitle();
 
   void execute();
-
 }

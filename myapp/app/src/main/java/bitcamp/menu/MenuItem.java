@@ -2,8 +2,6 @@ package bitcamp.menu;
 
 import bitcamp.myapp.command.Command;
 
-import java.util.Objects;
-
 public class MenuItem extends AbstractMenu {
 
   Command command;
@@ -29,5 +27,4 @@ public class MenuItem extends AbstractMenu {
       System.out.println(title);
     }
   }
-
 }
