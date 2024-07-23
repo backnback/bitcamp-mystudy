@@ -17,6 +17,7 @@ repositories {
 }
 
 dependencies {
+    implementation 'com.drewnoakes:metadata-extractor:2.19.0'
     // Use JUnit Jupiter for testing.
     testImplementation libs.junit.jupiter
 
