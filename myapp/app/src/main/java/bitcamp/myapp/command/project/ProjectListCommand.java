@@ -22,7 +22,6 @@ public class ProjectListCommand implements Command {
         System.out.printf("%d %s %s ~ %s\n",
             project.getNo(), project.getTitle(), project.getStartDate(), project.getEndDate());
       }
-
     } catch (Exception e) {
       System.out.println("목록 조회 중 오류 발생!");
     }

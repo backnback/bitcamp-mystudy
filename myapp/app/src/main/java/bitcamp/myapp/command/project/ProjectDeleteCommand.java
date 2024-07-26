@@ -25,14 +25,11 @@ public class ProjectDeleteCommand implements Command {
         return;
       }
 
-      if (projectDao.delete(projectNo)) {
-        System.out.printf("'%s' 프로젝트을 삭제 했습니다.\n", deletedProject.getTitle());
-      } else {
-        System.out.println("삭제 실패입니다!");
-      }
+      projectDao.delete(projectNo);
+      System.out.printf("%d번 프로젝트를 삭제 했습니다.\n", deletedProject.getNo());
 
     } catch (Exception e) {
-      System.out.println("데이터 삭제 중 오류 발생!");
+      System.out.println("삭제 중 오류 발생!");
     }
   }
 }

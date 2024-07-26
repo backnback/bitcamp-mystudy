@@ -25,14 +25,13 @@ public class BoardDeleteCommand implements Command {
         return;
       }
 
-      if (boardDao.delete(boardNo)) {
-        System.out.printf("'%s' 게시글을 삭제 했습니다.\n", deletedBoard.getTitle());
-      } else {
-        System.out.println("삭제 실패입니다!");
-      }
+      boardDao.delete(boardNo);
+      System.out.printf("'%s'번 게시글을 삭제 했습니다.\n", deletedBoard.getNo());
 
     } catch (Exception e) {
-      System.out.println("데이터 삭제 중 오류 발생!");
+      System.out.println("삭제 중 오류 발생!");
     }
   }
+
+
 }

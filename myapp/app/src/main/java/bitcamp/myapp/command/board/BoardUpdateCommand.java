@@ -28,17 +28,12 @@ public class BoardUpdateCommand implements Command {
       board.setViewCount(board.getViewCount() + 1);
       board.setTitle(Prompt.input("제목(%s)?", board.getTitle()));
       board.setContent(Prompt.input("내용(%s)?", board.getContent()));
+
+      boardDao.update(board);
       System.out.println("변경 했습니다.");
 
-      if (boardDao.update(board)) {
-        System.out.println("변경 했습니다.");
-      } else {
-        System.out.println("변경 실패입니다!");
-      }
-
     } catch (Exception e) {
-      System.out.println("데이터 변경 중 오류 발생!");
+      System.out.println("변경 중 오류 발생!");
     }
-
   }
 }

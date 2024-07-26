@@ -37,14 +37,11 @@ public class ProjectUpdateCommand implements Command {
       memberHandler.deleteMembers(project);
       memberHandler.addMembers(project);
 
-      if (projectDao.update(project)) {
-        System.out.println("변경 했습니다.");
-      } else {
-        System.out.println("변경 실패입니다!");
-      }
+      projectDao.update(project);
+      System.out.println("변경 했습니다.");
 
     } catch (Exception e) {
-      System.out.println("데이터 변경 중 오류 발생!");
+      System.out.println("변경 중 오류 발생!");
     }
   }
 
