@@ -4,7 +4,6 @@ import bitcamp.context.ApplicationContext;
 import bitcamp.listener.ApplicationListener;
 import bitcamp.myapp.listener.InitApplicationListener;
 import bitcamp.util.Prompt;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -48,7 +47,7 @@ public class ClientApp {
       System.out.println("[프로젝트 관리 시스템]");
 
       appCtx.getMainMenu().execute();
-      
+
     } catch (Exception ex) {
       System.out.println("실행 오류!");
       ex.printStackTrace();

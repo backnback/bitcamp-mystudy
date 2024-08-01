@@ -3,7 +3,6 @@ package bitcamp.myapp.dao.stub;
 import bitcamp.myapp.dao.UserDao;
 import bitcamp.myapp.vo.User;
 import bitcamp.net.ResponseStatus;
-
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
@@ -46,6 +45,7 @@ public class UserDaoStub implements UserDao {
     try (Socket socket = new Socket(host, port);
         ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
         ObjectInputStream in = new ObjectInputStream(socket.getInputStream())) {
+      
       out.writeUTF(dataName);
       out.writeUTF("list");
       out.flush();
@@ -63,6 +63,7 @@ public class UserDaoStub implements UserDao {
     try (Socket socket = new Socket(host, port);
         ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
         ObjectInputStream in = new ObjectInputStream(socket.getInputStream())) {
+
       out.writeUTF(dataName);
       out.writeUTF("get");
       out.writeInt(no);
@@ -81,6 +82,7 @@ public class UserDaoStub implements UserDao {
     try (Socket socket = new Socket(host, port);
         ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
         ObjectInputStream in = new ObjectInputStream(socket.getInputStream())) {
+
       out.writeUTF(dataName);
       out.writeUTF("update");
       out.writeObject(user);
@@ -99,6 +101,7 @@ public class UserDaoStub implements UserDao {
     try (Socket socket = new Socket(host, port);
         ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
         ObjectInputStream in = new ObjectInputStream(socket.getInputStream())) {
+
       out.writeUTF(dataName);
       out.writeUTF("delete");
       out.writeInt(no);

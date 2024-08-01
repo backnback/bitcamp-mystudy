@@ -26,6 +26,7 @@ public class BoardDaoStub implements BoardDao {
     try (Socket socket = new Socket(host, port);
         ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
         ObjectInputStream in = new ObjectInputStream(socket.getInputStream())) {
+
       out.writeUTF(dataName);
       out.writeUTF("insert");
       out.writeObject(board);
@@ -44,6 +45,7 @@ public class BoardDaoStub implements BoardDao {
     try (Socket socket = new Socket(host, port);
         ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
         ObjectInputStream in = new ObjectInputStream(socket.getInputStream())) {
+
       out.writeUTF(dataName);
       out.writeUTF("list");
       out.flush();
@@ -61,6 +63,7 @@ public class BoardDaoStub implements BoardDao {
     try (Socket socket = new Socket(host, port);
         ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
         ObjectInputStream in = new ObjectInputStream(socket.getInputStream())) {
+
       out.writeUTF(dataName);
       out.writeUTF("get");
       out.writeInt(no);
@@ -79,6 +82,7 @@ public class BoardDaoStub implements BoardDao {
     try (Socket socket = new Socket(host, port);
         ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
         ObjectInputStream in = new ObjectInputStream(socket.getInputStream())) {
+
       out.writeUTF(dataName);
       out.writeUTF("update");
       out.writeObject(board);
@@ -97,6 +101,7 @@ public class BoardDaoStub implements BoardDao {
     try (Socket socket = new Socket(host, port);
         ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
         ObjectInputStream in = new ObjectInputStream(socket.getInputStream())) {
+
       out.writeUTF(dataName);
       out.writeUTF("delete");
       out.writeInt(no);
