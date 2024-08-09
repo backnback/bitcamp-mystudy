@@ -31,6 +31,8 @@ public class BoardViewCommand implements Command {
       System.out.printf("작성일: %1$tY-%1$tm-%1$td %1$tH:%1$tM:%1$tS\n", board.getCreatedDate());
       System.out.printf("조회수: %d\n", board.getViewCount());
 
+      boardDao.update(board);
+
     } catch (Exception e) {
       System.out.println("조회 중 오류 발생!");
     }

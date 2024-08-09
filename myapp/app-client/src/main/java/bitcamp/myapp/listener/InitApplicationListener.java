@@ -6,30 +6,22 @@ import bitcamp.menu.MenuGroup;
 import bitcamp.menu.MenuItem;
 import bitcamp.myapp.command.HelpCommand;
 import bitcamp.myapp.command.HistoryCommand;
-import bitcamp.myapp.command.board.BoardAddCommand;
-import bitcamp.myapp.command.board.BoardDeleteCommand;
-import bitcamp.myapp.command.board.BoardListCommand;
-import bitcamp.myapp.command.board.BoardUpdateCommand;
-import bitcamp.myapp.command.board.BoardViewCommand;
-import bitcamp.myapp.command.project.ProjectAddCommand;
-import bitcamp.myapp.command.project.ProjectDeleteCommand;
-import bitcamp.myapp.command.project.ProjectListCommand;
-import bitcamp.myapp.command.project.ProjectMemberHandler;
-import bitcamp.myapp.command.project.ProjectUpdateCommand;
-import bitcamp.myapp.command.project.ProjectViewCommand;
-import bitcamp.myapp.command.user.UserAddCommand;
-import bitcamp.myapp.command.user.UserDeleteCommand;
-import bitcamp.myapp.command.user.UserListCommand;
-import bitcamp.myapp.command.user.UserUpdateCommand;
-import bitcamp.myapp.command.user.UserViewCommand;
+import bitcamp.myapp.command.board.*;
+import bitcamp.myapp.command.project.*;
+import bitcamp.myapp.command.user.*;
 import bitcamp.myapp.dao.BoardDao;
 import bitcamp.myapp.dao.ProjectDao;
 import bitcamp.myapp.dao.UserDao;
-import bitcamp.myapp.dao.stub.BoardDaoStub;
-import bitcamp.myapp.dao.stub.ProjectDaoStub;
-import bitcamp.myapp.dao.stub.UserDaoStub;
+import bitcamp.myapp.dao.mysql.BoardDaoImpl;
+import bitcamp.myapp.dao.mysql.ProjectDaoImpl;
+import bitcamp.myapp.dao.mysql.UserDaoImpl;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
 
 public class InitApplicationListener implements ApplicationListener {
+
+  private Connection con;
 
   UserDao userDao;
   BoardDao boardDao;
@@ -38,12 +30,17 @@ public class InitApplicationListener implements ApplicationListener {
   @Override
   public void onStart(ApplicationContext ctx) throws Exception {
 
-    String host = (String) ctx.getAttribute("host");
-    int port = (int) ctx.getAttribute("port");
+    String url = (String) ctx.getAttribute("url");
+    String username = (String) ctx.getAttribute("username");
+    String password = (String) ctx.getAttribute("password");
 
-    userDao = new UserDaoStub(host, port, "users");
-    boardDao = new BoardDaoStub(host, port, "boards");
-    projectDao = new ProjectDaoStub(host, port, "projects");
+    // 1) JDBC Connection 객체 준비
+    // => DBMS에 연결
+    con  = DriverManager.getConnection(url, username, password);
+
+    userDao = new UserDaoImpl(con);
+    boardDao = new BoardDaoImpl(con);
+    projectDao = new ProjectDaoImpl(con);
 
     MenuGroup mainMenu = ctx.getMainMenu();
 
@@ -77,5 +74,14 @@ public class InitApplicationListener implements ApplicationListener {
     mainMenu.add(new MenuItem("명령내역", new HistoryCommand()));
 
     mainMenu.setExitMenuTitle("종료");
+  }
+
+  @Override
+  public void onShutdown(ApplicationContext ctx) throws Exception {
+    try {
+
+    } catch (Exception e) {
+      // DBMS에 연결을 끊는 중에 오류가 발생하면 그냥 무시한다.
+    }
   }
 }
