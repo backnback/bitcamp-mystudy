@@ -1,12 +1,14 @@
-# 39. 여러 클라이언트의 요청을 동시에 처리하기: Multi-thread 적용
+# 40. DBMS 도입하기
 
 ## 학습목표
 
-- 멀티 스레딩을 이해하고 적용할 수 있다.
+- JDBC API와 JDBC Driver의 관계를 설명할 수 있다.
+- JDBC 드라이버의 각 타입에 따라 동작하는 과정과 특징을 설명할 수 있다.
+- JDBC API를 사용하여 DB의 데이터에 접근할 수 있다.
 
 ## 요구사항
 
-- 클라이언트 요청을 순차적으로 처리하지 말고 동시에 처리하라!
+- DBMS를 사용하여 데이터를 저장하라.
 
 ## 실행 결과
 
@@ -14,10 +16,21 @@
 
 ## 작업
 
-- 클라이언트 요청 처리를 별도의 실행 흐름에서 수행
-  - ServerApp 클래스 변경
-    - Thread의 서브 클래스를 execute() 메서드의 로컬 클래스로 정의
-  
+- 데이터베이스에 테이블 생성 및 예제 데이터 입력
+  - myapp_users, myapp_projects, myapp_boards 테이블 생성
+  - 예제 데이터 입력
+- MySQL JDBC Type4 드라이버 설정
+  - build.gradle 변경
+- DAO 구현체 생성 및 적용
+  - UserDaoImpl 클래스 정의
+  - BoardDaoImpl 클래스 정의
+    - findBy()에서 날짜를 꺼낼 때 getTimestamp()를 사용
+  - ProjectDaoImpl 클래스 정의
+    - ProjectDao 인터페이스 변경
+  - InitApplicationListener 변경
+- 도메인 클래스 변경
+  - Project 클래스 변경
+    - 시작일, 종료일 타입을 String에서 java.sql.Date 으로 변경 
+
 ## 소스 파일
 
-- ServerApp.java 
