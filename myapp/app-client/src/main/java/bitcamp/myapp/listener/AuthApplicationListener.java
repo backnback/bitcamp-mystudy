@@ -23,7 +23,7 @@ public class AuthApplicationListener implements ApplicationListener {
 
     // 로그인 사용자 정보를 쓸 수 있도록 보관한다.
     ctx.setAttribute("loginUser", user);
-
+    
     return true;
   }
 

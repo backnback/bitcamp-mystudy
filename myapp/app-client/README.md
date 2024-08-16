@@ -1,13 +1,14 @@
-# 41. 외부키(Foreign Key) 사용하기
+# 43. SQL 삽입 공격 차단하기
 
 ## 학습목표
 
-- 외부 키를 이용하여 테이블 데이터 간의 관계를 설정할 수 있다.
-- 부모/자식 테이블의 데이터를 다룰 수 있다.
+- SQL 삽입 공격을 이해하고 설명할 수 있다.
+- SQL 삽입 공격을 방어하는 코드를 작성할 수 있다.
+- 트랜잭션을 다룰 수 있다.
 
 ## 요구사항
 
-- 프로젝트의 멤버를 별도의 테이블로 분리하여 저장하라.
+- SQL 삽입 공격이 불가능하도록 JDBC 코드를 개선하라.
 
 ## 실행 결과
 
@@ -15,15 +16,11 @@
 
 ## 작업
 
-- DDL 및 예제 데이터 입력
-  - 프로젝트 테이블 정의 변경(myapp_projects)
-  - 프로젝트 멤버 테이블 추가(myapp_project_members)
-- ProjectDao 인터페이스 변경
-  - insertMembers() 메서드 규칙 추가
-- ProjectDaoImpl 클래스 변경
-  - insertMembers() 메서드 구현
-- ProjectAddCommand 클래스 변경
-
+- SQL을 실행할 때 Statement 대신 PreparedStatement를 사용
+  - BoardDaoImpl, ProjectDaoImpl, UserDaoImpl 클래스 변경
+- 트랜잭션 제어
+  - ProjectAddCommand, ProjectUpdateCommand, ProjectDeleteCommand 클래스 변경
+  - InitApplicationListener 클래스 변경
 
 ## 소스 파일
 

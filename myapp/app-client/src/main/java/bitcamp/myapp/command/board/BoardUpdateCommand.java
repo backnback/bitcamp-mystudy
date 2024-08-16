@@ -13,6 +13,7 @@ public class BoardUpdateCommand implements Command {
   private ApplicationContext ctx;
 
   public BoardUpdateCommand(BoardDao boardDao, ApplicationContext ctx) {
+
     this.boardDao = boardDao;
     this.ctx = ctx;
   }
@@ -33,7 +34,7 @@ public class BoardUpdateCommand implements Command {
         System.out.println("변경 권한이 없습니다.");
         return;
       }
-      
+
       board.setTitle(Prompt.input("제목(%s)?", board.getTitle()));
       board.setContent(Prompt.input("내용(%s)?", board.getContent()));
 
@@ -42,6 +43,7 @@ public class BoardUpdateCommand implements Command {
 
     } catch (Exception e) {
       System.out.println("변경 중 오류 발생!");
+      e.printStackTrace();
     }
   }
 }

@@ -13,6 +13,7 @@ public class BoardAddCommand implements Command {
   private ApplicationContext ctx;
 
   public BoardAddCommand(BoardDao boardDao, ApplicationContext ctx) {
+
     this.boardDao = boardDao;
     this.ctx = ctx;
   }
@@ -24,7 +25,6 @@ public class BoardAddCommand implements Command {
       Board board = new Board();
       board.setTitle(Prompt.input("제목?"));
       board.setContent(Prompt.input("내용?"));
-
       board.setWriter((User) ctx.getAttribute("loginUser"));
 
       boardDao.insert(board);

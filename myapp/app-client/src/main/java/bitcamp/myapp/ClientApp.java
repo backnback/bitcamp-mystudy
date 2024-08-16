@@ -5,7 +5,6 @@ import bitcamp.listener.ApplicationListener;
 import bitcamp.myapp.listener.AuthApplicationListener;
 import bitcamp.myapp.listener.InitApplicationListener;
 import bitcamp.util.Prompt;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,10 +34,6 @@ public class ClientApp {
   void execute() {
 
     try {
-      appCtx.setAttribute("url", "jdbc:mysql://localhost/studydb"/*Prompt.input("DBMS URL?")*/);
-      appCtx.setAttribute("username", "study"/*Prompt.input("아이디?")*/);
-      appCtx.setAttribute("password", "1111"/*Prompt.input("암호?")*/);
-
       // 애플리케이션이 시작될 때 리스너에게 알린다.
       for (ApplicationListener listener : listeners) {
         try {

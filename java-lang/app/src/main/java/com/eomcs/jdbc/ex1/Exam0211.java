@@ -23,10 +23,10 @@ public class Exam0211 {
           // 서버쪽에서는 일정 기간(timeout) 동안 커넥션을 유지한다.
           // con.close();
         } catch (Exception e) {
+
         }
         System.out.println("DBMS와 연결 해제됨!");
       }
-
     }
   }
 }

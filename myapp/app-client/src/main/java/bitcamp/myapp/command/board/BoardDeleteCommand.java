@@ -13,14 +13,15 @@ public class BoardDeleteCommand implements Command {
   private ApplicationContext ctx;
 
   public BoardDeleteCommand(BoardDao boardDao, ApplicationContext ctx) {
+
     this.boardDao = boardDao;
     this.ctx = ctx;
   }
 
-
   @Override
   public void execute(String menuName) {
     User loginUser = (User) ctx.getAttribute("loginUser");
+
     System.out.printf("[%s]\n", menuName);
     int boardNo = Prompt.inputInt("게시글 번호?");
 

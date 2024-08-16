@@ -50,7 +50,6 @@ public class Board implements Serializable {
     return Objects.hashCode(no);
   }
 
-
   public int getNo() {
     return no;
   }
@@ -98,5 +97,4 @@ public class Board implements Serializable {
   public void setWriter(User writer) {
     this.writer = writer;
   }
-
 }
