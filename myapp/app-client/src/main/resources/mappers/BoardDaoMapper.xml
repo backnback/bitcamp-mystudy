@@ -4,14 +4,14 @@
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="BoardDao">
 
-    <resultMap id="BoardMap" type="bitcamp.myapp.vo.Board">
+    <resultMap id="BoardMap" type="board">
         <id column="board_id" property="no"/>
         <result column="title" property="title"/>
         <result column="content" property="content"/>
         <result column="created_date" property="createdDate"/>
         <result column="view_count" property="viewCount"/>
 
-        <association property="writer" javaType="bitcamp.myapp.vo.User">
+        <association property="writer" javaType="user">
             <id column="user_id" property="no"/>
             <result column="name" property="name"/>
         </association>
@@ -31,7 +31,7 @@
             b.board_id asc
     </select>
 
-    <insert id="insert" parameterType="bitcamp.myapp.vo.Board">
+    <insert id="insert" parameterType="board">
         insert into myapp_boards(title, content, user_id)
         values (#{title}, #{content}, #{writer.no})
     </insert>
@@ -51,7 +51,7 @@
             b.board_id=#{no}
     </select>
 
-    <update id="update" parameterType="bitcamp.myapp.vo.Board">
+    <update id="update" parameterType="board">
         update myapp_boards set
             title=#{title},
             content=#{content}
