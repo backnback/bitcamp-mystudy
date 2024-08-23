@@ -15,8 +15,8 @@ public class BoardListCommand implements Command {
 
   @Override
   public void execute(String menuName, Prompt prompt) {
-    prompt.printf("[%s]\n", menuName);
     try {
+      prompt.printf("[%s]\n", menuName);
       prompt.println("번호 제목 작성자 작성일 조회수");
 
       for (Board board : boardDao.list()) {

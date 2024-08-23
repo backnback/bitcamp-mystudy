@@ -23,10 +23,10 @@ public class MenuItem extends AbstractMenu {
 
   @Override
   public void execute(Prompt prompt) {
-      if (command != null) {
-        command.execute(title, prompt);
-      } else {
-        prompt.println(title);
-      }
+    if (command != null) {
+      command.execute(title, prompt);
+    } else {
+      prompt.println(title);
+    }
   }
 }

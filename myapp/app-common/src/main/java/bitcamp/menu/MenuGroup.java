@@ -46,8 +46,8 @@ public class MenuGroup extends AbstractMenu {
         }
       }
     } catch (Exception e) {
-        e.printStackTrace();
-        prompt.println("실행 오류!");
+      e.printStackTrace();
+      prompt.println("실행 오류!");
     }
   }
 

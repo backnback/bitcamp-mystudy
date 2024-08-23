@@ -45,7 +45,7 @@ public class ProjectMemberHandler {
     if (project.getMembers() == null || project.getMembers().size() == 0) {
       return;
     }
-    
+
     Object[] members = project.getMembers().toArray();
     for (Object obj : members) {
       User member = (User) obj;

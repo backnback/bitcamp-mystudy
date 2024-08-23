@@ -15,9 +15,9 @@ public class UserListCommand implements Command {
 
   @Override
   public void execute(String menuName, Prompt prompt) {
-    prompt.printf("[%s]\n", menuName);
-
     try {
+      prompt.printf("[%s]\n", menuName);
+
       prompt.println("번호 이름 이메일");
 
       for (User user : userDao.list()) {
