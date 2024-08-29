@@ -5,24 +5,26 @@ import bitcamp.myapp.vo.Board;
 import bitcamp.myapp.vo.User;
 import org.apache.ibatis.session.SqlSessionFactory;
 
-import javax.servlet.*;
+import javax.servlet.GenericServlet;
+import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-@WebServlet("/board/add")
-public class BoardAddServlet extends GenericServlet {
+@WebServlet("/board/delete")
+public class BoardDeleteServlet extends GenericServlet {
 
   private BoardDao boardDao;
   private SqlSessionFactory sqlSessionFactory;
 
   @Override
   public void init() throws ServletException {
-    ServletContext ctx = this.getServletContext();
-    this.boardDao = (BoardDao) ctx.getAttribute("boardDao");
-    this.sqlSessionFactory = (SqlSessionFactory) ctx.getAttribute("sqlSessionFactory");
+    this.boardDao = (BoardDao) this.getServletContext().getAttribute("boardDao");
+    this.sqlSessionFactory = (SqlSessionFactory) this.getServletContext().getAttribute("sqlSessionFactory");
   }
 
   @Override
@@ -33,23 +35,32 @@ public class BoardAddServlet extends GenericServlet {
     req.getRequestDispatcher("/header").include(req, res);
 
     try {
-      out.println("<h1>게시글 등록 결과</h1>");
+      out.println("<h1>게시글 삭제 결과</h1>");
 
-      Board board = new Board();
-      board.setTitle(req.getParameter("title"));
-      board.setContent(req.getParameter("content"));
-
-      // 클라이언트 전용 보관소에서 로그인 사용자 정보를 꺼낸다.
       User loginUser = (User) ((HttpServletRequest) req).getSession().getAttribute("loginUser");
-      board.setWriter(loginUser);
 
-      boardDao.insert(board);
+      int boardNo = Integer.parseInt(req.getParameter("no"));
+
+      Board board = boardDao.findBy(boardNo);
+      if (board == null) {
+        out.println("<p>없는 게시글입니다.</p>");
+        out.println("</body>");
+        out.println("</html>");
+        return;
+      } else if (loginUser == null || loginUser.getNo() > 10 && board.getWriter().getNo() != loginUser.getNo()) {
+        out.println("<p>삭제 권한이 없습니다.</p>");
+        out.println("</body>");
+        out.println("</html>");
+        return;
+      }
+
+      boardDao.delete(boardNo);
       sqlSessionFactory.openSession(false).commit();
-      out.println("<p>등록 성공입니다.</p>");
+      out.println("<p>삭제 했습니다.</p>");
 
     } catch (Exception e) {
       sqlSessionFactory.openSession(false).rollback();
-      out.println("<p>등록 중 오류 발생!</p>");
+      out.println("<p>삭제 중 오류 발생!</p>");
       e.printStackTrace();
     }
 
@@ -58,5 +69,4 @@ public class BoardAddServlet extends GenericServlet {
 
     ((HttpServletResponse) res).setHeader("Refresh", "1;url=/board/list");
   }
-
 }
