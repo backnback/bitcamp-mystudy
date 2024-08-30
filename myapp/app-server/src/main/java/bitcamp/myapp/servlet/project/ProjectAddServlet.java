@@ -42,6 +42,7 @@ public class ProjectAddServlet extends GenericServlet {
         }
         project.setMembers(members);
       }
+
       projectDao.insert(project);
 
       if (project.getMembers() != null && project.getMembers().size() > 0) {

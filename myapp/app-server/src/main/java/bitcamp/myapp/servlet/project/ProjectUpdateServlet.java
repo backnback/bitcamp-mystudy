@@ -47,7 +47,7 @@ public class ProjectUpdateServlet extends GenericServlet {
       }
 
       if (!projectDao.update(project)) {
-        throw new Exception("<p>없는 프로젝트입니다.</p>");
+        throw new Exception("없는 프로젝트입니다!");
       }
 
       projectDao.deleteMembers(project.getNo());

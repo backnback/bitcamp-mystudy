@@ -3,8 +3,7 @@
     contentType="text/html;charset=UTF-8" 
     pageEncoding="UTF-8"
     trimDirectiveWhitespaces="true"%>
-
-<jsp:include page="/header"/>
+<%@ page import="bitcamp.myapp.vo.User"%>
 
 <!DOCTYPE html>
 <html>
@@ -25,18 +24,16 @@
       <li class='btn btn-default'><a href='/board/list'>게시글</a></li>
     </ul>
   </nav>
-
 <%
-    User loginUser = (User) ((HttpServletRequest) req).getSession().getAttribute("loginUser
+User loginUser = (User) ((HttpServletRequest) request).getSession().getAttribute("loginUser");
 %>
-<%
   <div class='login-state pos-right'>
 <%if (loginUser == null) {%>
     <a href='/auth/form' class='btn btn-primary'>로그인</a>
-    <%} else {%>
-      out.printf("  <a href='/user/view?no=<%=%>>' class='btn btn-light'>%s</a>\n", loginUser.getNo(), loginUser.getName());
+<%} else {%>
+    <a href='/user/view?no=<%=loginUser.getNo()%>' class='btn btn-light'><%=loginUser.getName()%></a>
     <a href='/auth/logout' class='btn btn-secondary'>로그아웃</a>
-    <%}%>
+<%}%>
   </div>
 
 </header>

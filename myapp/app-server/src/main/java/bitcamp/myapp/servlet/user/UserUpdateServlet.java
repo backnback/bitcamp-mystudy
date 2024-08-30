@@ -39,7 +39,7 @@ public class UserUpdateServlet extends GenericServlet {
         sqlSessionFactory.openSession(false).commit();
         ((HttpServletResponse) res).sendRedirect("/user/list");
       } else {
-        throw new Exception("없는 회원입니다.");
+        throw new Exception("없는 회원입니다!");
       }
 
     } catch (Exception e) {
@@ -47,7 +47,6 @@ public class UserUpdateServlet extends GenericServlet {
       req.setAttribute("exception", e);
       req.getRequestDispatcher("/error.jsp").forward(req, res);
     }
-
   }
 
 }

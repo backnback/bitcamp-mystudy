@@ -31,7 +31,6 @@ public class BoardAddServlet extends GenericServlet {
       board.setTitle(req.getParameter("title"));
       board.setContent(req.getParameter("content"));
 
-      // 클라이언트 전용 보관소에서 로그인 사용자 정보를 꺼낸다.
       User loginUser = (User) ((HttpServletRequest) req).getSession().getAttribute("loginUser");
       board.setWriter(loginUser);
 
@@ -45,4 +44,5 @@ public class BoardAddServlet extends GenericServlet {
       req.getRequestDispatcher("/error.jsp").forward(req, res);
     }
   }
+
 }

@@ -26,17 +26,17 @@ public class UserDeleteServlet extends GenericServlet {
   @Override
   public void service(ServletRequest req, ServletResponse res) throws ServletException, IOException {
     try {
-
       int userNo = Integer.parseInt(req.getParameter("no"));
 
       if (userDao.delete(userNo)) {
         sqlSessionFactory.openSession(false).commit();
         ((HttpServletResponse) res).sendRedirect("/user/list");
       } else {
-        throw new Exception("<p>없는 회원입니다.</p>");
+        throw new Exception("없는 회원입니다.");
       }
 
     } catch (Exception e) {
+      sqlSessionFactory.openSession(false).rollback();
       req.setAttribute("exception", e);
       req.getRequestDispatcher("/error.jsp").forward(req, res);
     }

@@ -30,15 +30,13 @@ public class BoardUpdateServlet extends GenericServlet {
   public void service(ServletRequest req, ServletResponse res) throws ServletException, IOException {
     try {
       User loginUser = (User) ((HttpServletRequest) req).getSession().getAttribute("loginUser");
-
       int boardNo = Integer.parseInt(req.getParameter("no"));
       Board board = boardDao.findBy(boardNo);
 
       if (board == null) {
-        throw new Exception("<p>없는 게시글입니다.</p>");
-
+        throw new Exception("없는 게시글입니다.");
       } else if (loginUser == null || loginUser.getNo() > 10 && board.getWriter().getNo() != loginUser.getNo()) {
-        throw new Exception("<p>변경 권한이 없습니다.</p>");
+        throw new Exception("변경 권한이 없습니다.");
       }
 
       board.setTitle(req.getParameter("title"));

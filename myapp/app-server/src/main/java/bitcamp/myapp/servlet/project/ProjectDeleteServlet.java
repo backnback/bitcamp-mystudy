@@ -33,7 +33,7 @@ public class ProjectDeleteServlet extends GenericServlet {
         sqlSessionFactory.openSession(false).commit();
         ((HttpServletResponse) res).sendRedirect("/project/list");
       } else {
-        throw new Exception("<p>없는 프로젝트입니다.</p>");
+        throw new Exception("없는 프로젝트입니다.");
       }
 
     } catch (Exception e) {

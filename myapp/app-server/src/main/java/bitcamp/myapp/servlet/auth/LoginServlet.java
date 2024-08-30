@@ -42,6 +42,7 @@ public class LoginServlet extends GenericServlet {
       session.setAttribute("loginUser", user);
       ((HttpServletResponse) res).sendRedirect("/");
 
+
     } catch (Exception e) {
       req.setAttribute("exception", e);
       req.getRequestDispatcher("/error.jsp").forward(req, res);
