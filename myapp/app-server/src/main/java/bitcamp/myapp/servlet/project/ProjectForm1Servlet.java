@@ -1,4 +1,4 @@
-package bitcamp.myapp.servlet.auth;
+package bitcamp.myapp.servlet.project;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -7,12 +7,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet("/auth/logout")
-public class LogoutServlet extends HttpServlet {
+@WebServlet("/project/form1")
+public class ProjectForm1Servlet extends HttpServlet {
 
   @Override
   protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
-    req.getSession().invalidate();
-    res.sendRedirect("/");
+    res.setContentType("text/html;charset=UTF-8");
+    req.getRequestDispatcher("/project/form1.jsp").include(req, res);
   }
 }
