@@ -1,38 +1,35 @@
-package bitcamp.myapp.servlet;
+package bitcamp.myapp.controller;
 
 import bitcamp.myapp.service.BoardService;
 import bitcamp.myapp.vo.AttachedFile;
 import bitcamp.myapp.vo.User;
+import bitcamp.mybatis.annotation.RequestMapping;
 
-import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.BufferedInputStream;
 import java.io.FileInputStream;
-import java.io.IOException;
 import java.io.OutputStream;
 import java.util.HashMap;
 import java.util.Map;
 
-@WebServlet("/download")
-public class DownloadServlet extends HttpServlet {
+
+public class DownloadController {
 
   private BoardService boardService;
   private Map<String, String> downloadPathMap = new HashMap<>();
 
-  @Override
-  public void init() throws ServletException {
-    this.boardService = (BoardService) this.getServletContext().getAttribute("boardService");
-    this.downloadPathMap.put("board", this.getServletContext().getRealPath("/upload/board"));
-    this.downloadPathMap.put("user", this.getServletContext().getRealPath("/upload/user"));
-    this.downloadPathMap.put("project", this.getServletContext().getRealPath("/upload/project"));
+  public DownloadController(BoardService boardService, ServletContext ctx) {
+    this.boardService = boardService;
+    this.downloadPathMap.put("board", ctx.getRealPath("/upload/board"));
+    this.downloadPathMap.put("user", ctx.getRealPath("/upload/user"));
+    this.downloadPathMap.put("project", ctx.getRealPath("/upload/project"));
   }
 
-  @Override
-  protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
-    try {
+
+  @RequestMapping("/download")
+  public void download(HttpServletRequest req, HttpServletResponse res) throws Exception {
       User loginUser = (User) ((HttpServletRequest) req).getSession().getAttribute("loginUser");
       if (loginUser == null) {
         throw new Exception("로그인 하지 않았습니다.");
@@ -67,9 +64,6 @@ public class DownloadServlet extends HttpServlet {
       } else {
 
       }
-    } catch (Exception e) {
-      req.setAttribute("exception", e);
-    }
   }
 
 }
