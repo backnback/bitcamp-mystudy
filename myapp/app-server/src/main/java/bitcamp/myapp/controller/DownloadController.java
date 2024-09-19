@@ -1,19 +1,19 @@
 package bitcamp.myapp.controller;
 
+import bitcamp.myapp.annotation.RequestMapping;
+import bitcamp.myapp.annotation.RequestParam;
 import bitcamp.myapp.service.BoardService;
 import bitcamp.myapp.vo.AttachedFile;
 import bitcamp.myapp.vo.User;
-import bitcamp.mybatis.annotation.RequestMapping;
 
 import javax.servlet.ServletContext;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.BufferedInputStream;
 import java.io.FileInputStream;
 import java.io.OutputStream;
 import java.util.HashMap;
 import java.util.Map;
-
 
 public class DownloadController {
 
@@ -27,43 +27,45 @@ public class DownloadController {
     this.downloadPathMap.put("project", ctx.getRealPath("/upload/project"));
   }
 
-
   @RequestMapping("/download")
-  public void download(HttpServletRequest req, HttpServletResponse res) throws Exception {
-      User loginUser = (User) ((HttpServletRequest) req).getSession().getAttribute("loginUser");
-      if (loginUser == null) {
-        throw new Exception("로그인 하지 않았습니다.");
+  public void download(
+          @RequestParam("path") String path,
+          @RequestParam("fileNo") int fileNo,
+          HttpSession session,
+          HttpServletResponse res) throws Exception {
+    
+    User loginUser = (User) session.getAttribute("loginUser");
+    if (loginUser == null) {
+      throw new Exception("로그인 하지 않았습니다.");
+    }
+
+    String downloadDir = downloadPathMap.get(path);
+
+    if (path.equals("board")) {
+      AttachedFile attachedFile = boardService.getAttachedFile(fileNo);
+
+      res.setHeader(
+              "Content-Disposition",
+              String.format("attachment; filename=\"%s\"", attachedFile.getOriginFilename())
+      );
+
+      BufferedInputStream downloadFileIn = new BufferedInputStream(
+              new FileInputStream(downloadDir + "/" + attachedFile.getFilename()));
+      OutputStream out = res.getOutputStream();
+
+      int b;
+      while ((b = downloadFileIn.read()) != -1) {
+        out.write(b);
       }
 
-      String path = req.getParameter("path");
-      String downloadDir = downloadPathMap.get(path);
-
-      if (path.equals("board")) {
-        int fileNo = Integer.parseInt(req.getParameter("fileNo"));
-        AttachedFile attachedFile = boardService.getAttachedFile(fileNo);
-
-        res.setHeader(
-                "Content-Disposition",
-                String.format("attachment; filename=\"%s\"", attachedFile.getOriginFilename())
-        );
-
-        BufferedInputStream downloadFileIn = new BufferedInputStream(
-                new FileInputStream(downloadDir + "/" + attachedFile.getFilename()));
-        OutputStream out = res.getOutputStream();
-
-        int b;
-        while ((b = downloadFileIn.read()) != -1) {
-          out.write(b);
-        }
-
-        downloadFileIn.close();
+      downloadFileIn.close();
 
 
-      } else if (path.equals("user")) {
+    } else if (path.equals("user")) {
 
-      } else {
+    } else {
 
-      }
+    }
   }
 
 }

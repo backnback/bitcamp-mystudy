@@ -46,8 +46,6 @@ public class ContextLoaderListener implements ServletContextListener {
 
       ServletContext ctx = sce.getServletContext();
       ctx.setAttribute("sqlSessionFactory", sqlSessionFactoryProxy);
-      ctx.setAttribute("boardService", boardService);
-
 
       List<Object> controllers = new ArrayList<>();
       controllers.add(new UserController(userService));
@@ -55,7 +53,6 @@ public class ContextLoaderListener implements ServletContextListener {
       controllers.add(new ProjectController(projectService, userService));
       controllers.add(new BoardController(boardService, ctx));
       controllers.add(new DownloadController(boardService, ctx));
-
 
       ctx.setAttribute("controllers", controllers);
 
