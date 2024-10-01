@@ -17,6 +17,9 @@ repositories {
 }
 
 dependencies {
+
+    // Spring IOC 컨테이너
+    implementation 'org.springframework:spring-context:5.3.39'
     
     implementation 'org.apache.tomcat.embed:tomcat-embed-jasper:9.0.93'
     

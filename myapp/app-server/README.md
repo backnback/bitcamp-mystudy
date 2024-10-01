@@ -4,6 +4,8 @@
 
 - NCP의 mysql 서비스를 설정하고 사용할 수 있다.
 - NCP의 ObjectStorage 서비스를 설정하고 사용할 수 있다.
+- NCP의 ImageOptimizer 서비스를 설정하고 사용할 수 있다.
+- Transaction의 propagation 유형을 이해하고 다룰 수 있다.
 
 ## 요구사항
 
@@ -42,7 +44,7 @@
   - 회원의 사진 보기
     - /user/view.jsp 변경
     - UserDaoMapper 파일 변경: select SQL 변경
-    - NCP ImageOptimizer 서비스에 회원 사진을 crop 하는 서비스 추가
+    - NCP ImageOptimizer 서비스에 회원 사진을 crop 하는 서비스 추가(100 x 100)
   - 회원 사진 변경
     - /user/view.jsp 변경
     - UserController의 update() 변경
@@ -50,6 +52,10 @@
   - 회원 삭제
     - UserController의 delete() 변경
       - @Transactional 적용
-
+  - 회원 목록에서 사진 보기
+    - /user/list.jsp 변경
+    - NCP ImageOptimizer 서비스에 회원 사진을 crop 하는 서비스 추가 (20 x 20)
+    - UserDaoMapper 파일 변경: 목록을 가져오는 select SQL 변경
+    - 
 ## 소스 파일
 
