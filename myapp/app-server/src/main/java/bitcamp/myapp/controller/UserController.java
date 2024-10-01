@@ -76,10 +76,11 @@ public class UserController {
       HashMap<String, Object> options = new HashMap<>();
       options.put(StorageService.CONTENT_TYPE, file.getContentType());
       storageService.upload(folderName + filename,
-          file.getInputStream(),
-          options);
+              file.getInputStream(),
+              options);
 
       user.setPhoto(filename);
+
     } else {
       user.setPhoto(old.getPhoto());
     }
@@ -94,10 +95,11 @@ public class UserController {
   @Transactional
   @GetMapping("/user/delete")
   public String delete(int no) throws Exception {
+
     User old = userService.get(no);
 
     if (userService.delete(no)) {
-    storageService.delete(folderName + old.getPhoto());
+      storageService.delete(folderName + old.getPhoto());
       return "redirect:list";
     } else {
       throw new Exception("없는 회원입니다.");
