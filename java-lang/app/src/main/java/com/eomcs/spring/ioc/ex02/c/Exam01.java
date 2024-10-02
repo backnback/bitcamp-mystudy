@@ -14,6 +14,9 @@ public class Exam01 {
     // "singleton" 객체는 기본으로 생성된다.
 
     System.out.println("[빈 이름]");
+
+    System.out.println(iocContainer.getBeanDefinitionCount());
+
     String[] names = iocContainer.getBeanDefinitionNames();
     for (String name : names) {
       System.out.println(name);
