@@ -1,8 +1,6 @@
 package com.eomcs.spring.ioc.ex01;
 
-import org.springframework.stereotype.Component;
-
-@Component
+// @Component
 public class Engine {
   String maker;
   int valve;

@@ -17,9 +17,9 @@
     <form action='update' method="post" enctype="multipart/form-data">
         <a href="https://kr.object.ncloudstorage.com/bitcamp-bucket95/user/${user.photo == null ? 'default.png' : user.photo}">
             <img src="https://d07owler4941.edge.naverncp.com/NFZ2WwiwDV/user/${user.photo == null ? 'default.png' : user.photo}?type=f&w=100&h=100">
-                           </a><input name="file" type="file"><br>
-                           번호: <input name='no' readonly type='text' value='${user.no}'><br>
-                           이름: <input name='name' type='text' value='${user.name}'><br>
+        </a><input name="file" type="file"><br>
+        번호: <input name='no' readonly type='text' value='${user.no}'><br>
+        이름: <input name='name' type='text' value='${user.name}'><br>
         이메일: <input name='email' type='email' value='${user.email}'><br>
         암호: <input name='password' type='password'><br>
         연락처: <input name='tel' type='tel' value='${user.tel}'><br>
