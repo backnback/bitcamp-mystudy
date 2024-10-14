@@ -6,12 +6,14 @@ import bitcamp.myapp.vo.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 @Controller
+@RequestMapping("/auth")
 public class AuthController {
 
   private UserService userService;
@@ -20,17 +22,17 @@ public class AuthController {
     this.userService = userService;
   }
 
-  @GetMapping("/auth/form")
+  @GetMapping("form")
   public void form() {
   }
 
-  @PostMapping("/auth/login")
+  @PostMapping("login")
   public String login(
-          String email,
-          String password,
-          boolean saveEmail,
-          HttpServletResponse res,
-          HttpSession session) throws Exception {
+      String email,
+      String password,
+      boolean saveEmail,
+      HttpServletResponse res,
+      HttpSession session) throws Exception {
 
     User user = userService.exists(email, password);
     if (user == null) {
@@ -52,7 +54,7 @@ public class AuthController {
     return "redirect:/";
   }
 
-  @GetMapping("/auth/logout")
+  @GetMapping("logout")
   public String logout(HttpSession session) {
     session.invalidate();
     return "redirect:/";
