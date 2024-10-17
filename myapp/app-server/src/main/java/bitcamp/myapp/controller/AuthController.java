@@ -28,11 +28,11 @@ public class AuthController {
 
   @PostMapping("login")
   public String login(
-      String email,
-      String password,
-      boolean saveEmail,
-      HttpServletResponse res,
-      HttpSession session) throws Exception {
+          String email,
+          String password,
+          boolean saveEmail,
+          HttpServletResponse res,
+          HttpSession session) throws Exception {
 
     User user = userService.exists(email, password);
     if (user == null) {
