@@ -3,6 +3,7 @@ package bitcamp.myapp.controller;
 import bitcamp.myapp.service.StorageService;
 import bitcamp.myapp.service.UserService;
 import bitcamp.myapp.vo.User;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
@@ -15,17 +16,14 @@ import java.util.UUID;
 
 @Controller
 @RequestMapping("/users")
+@RequiredArgsConstructor
 public class UserController {
 
-  private UserService userService;
-  private StorageService storageService;
+  private final UserService userService;
+  private final StorageService storageService;
 
   private String folderName = "user/";
 
-  public UserController(UserService userService, StorageService storageService) {
-    this.userService = userService;
-    this.storageService = storageService;
-  }
 
   @GetMapping("form")
   public String form() {

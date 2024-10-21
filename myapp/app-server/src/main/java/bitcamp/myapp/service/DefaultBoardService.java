@@ -3,22 +3,21 @@ package bitcamp.myapp.service;
 import bitcamp.myapp.dao.BoardDao;
 import bitcamp.myapp.vo.AttachedFile;
 import bitcamp.myapp.vo.Board;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.HashMap;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class DefaultBoardService implements BoardService {
 
-  private BoardDao boardDao;
-  private PlatformTransactionManager txManager;
+  private final BoardDao boardDao;
+  private final PlatformTransactionManager txManager;
 
-  public DefaultBoardService(BoardDao boardDao, PlatformTransactionManager txManager) {
-    this.boardDao = boardDao;
-    this.txManager = txManager;
-  }
 
   @Transactional
   public void add(Board board) throws Exception {
@@ -28,8 +27,13 @@ public class DefaultBoardService implements BoardService {
     }
   }
 
-  public List<Board> list() throws Exception {
-    return boardDao.list();
+  public List<Board> list(int pageNo, int pageSize) throws Exception {
+
+    HashMap<String, Object> options = new HashMap<>();
+    options.put("rowNo", (pageNo - 1) * pageSize);
+    options.put("length", pageSize);
+
+    return boardDao.list(options);
   }
 
   public Board get(int boardNo) throws Exception {
@@ -42,6 +46,10 @@ public class DefaultBoardService implements BoardService {
     if (board != null) {
       boardDao.updateViewCount(board.getNo(), board.getViewCount() + 1);
     }
+  }
+
+  public int countAll() throws Exception {
+    return boardDao.countAll();
   }
 
   @Transactional

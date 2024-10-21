@@ -4,6 +4,7 @@ import bitcamp.myapp.service.BoardService;
 import bitcamp.myapp.service.StorageService;
 import bitcamp.myapp.vo.AttachedFile;
 import bitcamp.myapp.vo.User;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,16 +12,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import javax.servlet.http.HttpSession;
 import java.io.OutputStream;
 
+@RequiredArgsConstructor
 @Controller
 public class DownloadController {
 
-  private BoardService boardService;
-  private StorageService storageService;
+  private final BoardService boardService;
+  private final StorageService storageService;
 
-  public DownloadController(BoardService boardService, StorageService storageService) {
-    this.boardService = boardService;
-    this.storageService = storageService;
-  }
 
   @GetMapping("/download")
   public HttpHeaders download(

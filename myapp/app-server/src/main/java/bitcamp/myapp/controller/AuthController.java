@@ -3,6 +3,7 @@ package bitcamp.myapp.controller;
 
 import bitcamp.myapp.service.UserService;
 import bitcamp.myapp.vo.User;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,13 +15,11 @@ import javax.servlet.http.HttpSession;
 
 @Controller
 @RequestMapping("/auth")
+@RequiredArgsConstructor
 public class AuthController {
 
-  private UserService userService;
+  private final UserService userService;
 
-  public AuthController(UserService userService) {
-    this.userService = userService;
-  }
 
   @GetMapping("form")
   public void form() {
