@@ -5,6 +5,8 @@ import bitcamp.myapp.service.UserService;
 import bitcamp.myapp.vo.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,25 +15,26 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+
+@RequiredArgsConstructor
 @Controller
 @RequestMapping("/auth")
-@RequiredArgsConstructor
 public class AuthController {
 
   private final UserService userService;
 
-
   @GetMapping("form")
-  public void form() {
+  public void form(@CookieValue(required = false) String email, Model model) {
+    model.addAttribute("email", email);
   }
 
   @PostMapping("login")
   public String login(
-          String email,
-          String password,
-          boolean saveEmail,
-          HttpServletResponse res,
-          HttpSession session) throws Exception {
+      String email,
+      String password,
+      boolean saveEmail,
+      HttpServletResponse res,
+      HttpSession session) throws Exception {
 
     User user = userService.exists(email, password);
     if (user == null) {
