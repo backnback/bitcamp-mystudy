@@ -1,11 +1,13 @@
 package bitcamp.myapp.controller;
 
+import bitcamp.myapp.annotation.LoginUser;
 import bitcamp.myapp.service.BoardService;
 import bitcamp.myapp.service.StorageService;
 import bitcamp.myapp.vo.AttachedFile;
 import bitcamp.myapp.vo.Board;
 import bitcamp.myapp.vo.User;
 import lombok.RequiredArgsConstructor;
+import org.apache.catalina.Manager;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -41,9 +43,8 @@ public class BoardController {
   public String add(
       Board board,
       MultipartFile[] files,
-      HttpSession session) throws Exception {
+      @LoginUser User loginUser) throws Exception {
 
-    User loginUser = (User) session.getAttribute("loginUser");
     if (loginUser == null) {
       throw new Exception("로그인 하지 않았습니다.");
     }
@@ -64,8 +65,7 @@ public class BoardController {
       // 첨부 파일을 Object Storage에 올린다.
       HashMap<String, Object> options = new HashMap<>();
       options.put(StorageService.CONTENT_TYPE, file.getContentType());
-      storageService.upload(folderName + attachedFile.getFilename(),
-          file.getInputStream(),
+      storageService.upload(folderName + attachedFile.getFilename(), file.getInputStream(),
           options);
 
       attachedFiles.add(attachedFile);
@@ -78,10 +78,8 @@ public class BoardController {
   }
 
   @GetMapping("list")
-  public void list(
-      @RequestParam(defaultValue = "1") int pageNo,
-      @RequestParam(defaultValue = "3") int pageSize,
-      Model model) throws Exception {
+  public void list(@RequestParam(defaultValue = "1") int pageNo,
+      @RequestParam(defaultValue = "3") int pageSize, Model model) throws Exception {
 
     if (pageNo < 1) {
       pageNo = 1;
@@ -118,19 +116,14 @@ public class BoardController {
   }
 
   @PostMapping("update")
-  public String update(
-      int no,
-      String title,
-      String content,
-      Part[] files,
-      HttpSession session) throws Exception {
-
-    User loginUser = (User) session.getAttribute("loginUser");
+  public String update(int no, String title, String content, Part[] files, @LoginUser User loginUser)
+      throws Exception {
 
     Board board = boardService.get(no);
     if (board == null) {
       throw new Exception("없는 게시글입니다.");
-    } else if (loginUser == null || loginUser.getNo() > 10 && board.getWriter().getNo() != loginUser.getNo()) {
+    } else if (loginUser == null || loginUser.getNo() > 10 && board.getWriter()
+        .getNo() != loginUser.getNo()) {
       throw new Exception("변경 권한이 없습니다.");
     }
 
@@ -151,8 +144,7 @@ public class BoardController {
       // 첨부 파일을 Object Storage에 올린다.
       HashMap<String, Object> options = new HashMap<>();
       options.put(StorageService.CONTENT_TYPE, part.getContentType());
-      storageService.upload(folderName + attachedFile.getFilename(),
-          part.getInputStream(),
+      storageService.upload(folderName + attachedFile.getFilename(), part.getInputStream(),
           options);
 
       attachedFiles.add(attachedFile);
@@ -165,16 +157,14 @@ public class BoardController {
   }
 
   @GetMapping("delete")
-  public String delete(
-      int no,
-      HttpSession session) throws Exception {
+  public String delete(int no, @LoginUser User loginUser) throws Exception {
 
-    User loginUser = (User) session.getAttribute("loginUser");
     Board board = boardService.get(no);
 
     if (board == null) {
       throw new Exception("없는 게시글입니다.");
-    } else if (loginUser == null || loginUser.getNo() > 10 && board.getWriter().getNo() != loginUser.getNo()) {
+    } else if (loginUser == null || loginUser.getNo() > 10 && board.getWriter()
+        .getNo() != loginUser.getNo()) {
       throw new Exception("삭제 권한이 없습니다.");
     }
 
@@ -191,12 +181,8 @@ public class BoardController {
   }
 
   @GetMapping("file/delete")
-  public String fileDelete(
-      HttpSession session,
-      int fileNo,
-      int boardNo) throws Exception {
+  public String fileDelete(@LoginUser User loginUser, int fileNo, int boardNo) throws Exception {
 
-    User loginUser = (User) session.getAttribute("loginUser");
     if (loginUser == null) {
       throw new Exception("로그인 하지 않았습니다.");
     }
