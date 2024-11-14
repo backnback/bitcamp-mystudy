@@ -45,10 +45,6 @@ public class BoardController {
       MultipartFile[] files,
       @LoginUser User loginUser) throws Exception {
 
-    if (loginUser == null) {
-      throw new Exception("로그인 하지 않았습니다.");
-    }
-
     board.setWriter(loginUser);
 
     ArrayList<AttachedFile> attachedFiles = new ArrayList<>();
@@ -122,7 +118,7 @@ public class BoardController {
     Board board = boardService.get(no);
     if (board == null) {
       throw new Exception("없는 게시글입니다.");
-    } else if (loginUser == null || loginUser.getNo() > 10 && board.getWriter()
+    } else if (loginUser.getNo() > 10 && board.getWriter()
         .getNo() != loginUser.getNo()) {
       throw new Exception("변경 권한이 없습니다.");
     }
@@ -163,7 +159,7 @@ public class BoardController {
 
     if (board == null) {
       throw new Exception("없는 게시글입니다.");
-    } else if (loginUser == null || loginUser.getNo() > 10 && board.getWriter()
+    } else if (loginUser.getNo() > 10 && board.getWriter()
         .getNo() != loginUser.getNo()) {
       throw new Exception("삭제 권한이 없습니다.");
     }
@@ -182,10 +178,6 @@ public class BoardController {
 
   @GetMapping("file/delete")
   public String fileDelete(@LoginUser User loginUser, int fileNo, int boardNo) throws Exception {
-
-    if (loginUser == null) {
-      throw new Exception("로그인 하지 않았습니다.");
-    }
 
     AttachedFile attachedFile = boardService.getAttachedFile(fileNo);
     if (attachedFile == null) {
